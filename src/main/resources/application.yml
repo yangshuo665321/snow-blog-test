@@ -1,0 +1,13 @@
+# 端口号
+server:
+  port: 1000
+
+# mybatis配置
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.snow
+
+#
+spring:
+  profiles:
+    active: dev
