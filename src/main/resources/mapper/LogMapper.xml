@@ -29,14 +29,14 @@
         created_time
     </sql>
 
-<!--    <insert id="save" parameterType="com.jg.blog.pojo.Log">-->
-<!--        insert into bl_log(-->
-<!--            log_url, log_params, log_status, log_message, log_method, log_time, log_result, log_ip-->
-<!--        ) values (-->
-<!--            #{logUrl}, #{logParams}, #{logStatus},  #{logMessage}, #{logMethod}, #{logTime},-->
-<!--            #{logResult}, #{logIp}-->
-<!--        )-->
-<!--    </insert>-->
+    <insert id="save" parameterType="com.snow.blog.pojo.Log">
+        insert into bl_log(
+            log_url, log_params, log_status, log_message, log_method, log_time, log_result, log_ip
+        ) values (
+            #{logUrl}, #{logParams}, #{logStatus},  #{logMessage}, #{logMethod}, #{logTime},#{logResult}, #{logIp}
+        )
+    </insert>
+
 <!--    <delete id="deleteById">-->
 <!--        delete from bl_log-->
 <!--        where log_id = #{id}-->

@@ -1,7 +1,11 @@
 package com.snow.blog.aspect;
 
 import com.alibaba.fastjson.JSON;
+import com.snow.blog.enums.StateEnums;
+import com.snow.blog.pojo.Log;
+import com.snow.blog.service.LogService;
 import com.snow.blog.utils.StringUtils;
+import com.snow.blog.utils.ThreadLocalContext;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,6 +15,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -29,6 +34,9 @@ import java.util.Arrays;
 @Component
 @Slf4j
 public class RequestAspect {
+
+    @Autowired
+    private LogService logService;
 
     /**
      * 两个 .. 代表所有子目录，最后括号里的两个 .. 代表所有参数
@@ -54,12 +62,24 @@ public class RequestAspect {
         printRequestLog(joinPoint, request, uri);
     }
 
+    /**
+     * 环绕通知
+     *
+     * @param pjp
+     * @return
+     * @throws Throwable
+     */
     @Around("logPointCut()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         long startTime = System.currentTimeMillis();
         Object ob = pjp.proceed();
         long time = System.currentTimeMillis() - startTime;
         log.info("耗时 : {}", time);
+
+        // 设置请求时间
+        Log logger = ThreadLocalContext.get().getLogger();
+        logger.setLogTime(time);
+
         return ob;
     }
 
@@ -72,6 +92,11 @@ public class RequestAspect {
     public void doAfterReturning(Object ret) {
         String result = JSON.toJSONString(ret);
         log.info("返回值：{}", result);
+
+        // 设置返回值
+        Log logger = ThreadLocalContext.get().getLogger();
+        logger.setLogResult(result);
+        logService.save(logger);
     }
 
     /**
@@ -82,7 +107,12 @@ public class RequestAspect {
      */
     @AfterThrowing(pointcut = "logPointCut()", throwing = "e")
     public void saveExceptionLog(JoinPoint joinPoint, Throwable e) {
-
+        Log logger = ThreadLocalContext.get().getLogger();
+        logger.setLogStatus(StateEnums.REQUEST_ERROR.getCode());
+        String exception = StringUtils.getPackageException(e, "com.snow");
+        logger.setLogMessage(exception);
+        logger.setLogTime(0L);
+        logService.save(logger);
     }
 
     /**
@@ -103,6 +133,14 @@ public class RequestAspect {
         log.info("方法 : {}.{}", controllerName, joinPoint.getSignature().getName());
         String params = Arrays.toString(joinPoint.getArgs());
         log.info("请求参数：{}", params);
+
+        // 获取日志实体
+        Log logger = ThreadLocalContext.get().getLogger();
+        logger.setLogUrl(uri);
+        logger.setLogParams(params);
+        logger.setLogStatus(StateEnums.REQUEST_SUCCESS.getCode());
+        logger.setLogMethod(request.getMethod());
+        logger.setLogIp(ip);
     }
 
 }

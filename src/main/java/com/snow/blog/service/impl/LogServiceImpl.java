@@ -1,6 +1,7 @@
 package com.snow.blog.service.impl;
 
 import com.snow.blog.mapper.LogMapper;
+import com.snow.blog.pojo.Log;
 import com.snow.blog.service.LogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,4 +21,13 @@ public class LogServiceImpl implements LogService {
     @Autowired
     private LogMapper logMapper;
 
+    /**
+     * 保存日志
+     *
+     * @param logger
+     */
+    @Override
+    public void save(Log logger) {
+        logMapper.save(logger);
+    }
 }

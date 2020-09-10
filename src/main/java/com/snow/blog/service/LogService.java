@@ -1,5 +1,7 @@
 package com.snow.blog.service;
 
+import com.snow.blog.pojo.Log;
+
 /**
  * 接口访问日志表服务层接口
  *
@@ -8,5 +10,12 @@ package com.snow.blog.service;
  * @Version 1.0
  */
 public interface LogService {
+
+    /**
+     * 保存日志
+     *
+     * @param logger
+     */
+    void save(Log logger);
 
 }

@@ -3,8 +3,6 @@ package com.snow.blog.mapper;
 import com.snow.blog.pojo.Log;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 /**
  * 接口访问日志表Mapper
  *
@@ -15,12 +13,13 @@ import java.util.List;
 @Component
 public interface LogMapper {
 
-//    /**
-//     * 保存
-//     * @param logger
-//     */
-//    void save(Log logger);
-//
+    /**
+     * 保存日志
+     *
+     * @param logger
+     */
+    void save(Log logger);
+
 //    /**
 //     * 分页查询
 //     * @param page
