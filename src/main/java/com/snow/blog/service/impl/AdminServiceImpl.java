@@ -31,4 +31,36 @@ public class AdminServiceImpl implements AdminService {
     public Admin getByUsername(String username) {
         return adminMapper.getByUsername(username);
     }
+
+    /**
+     * 查询管理员
+     *
+     * @return
+     */
+    @Override
+    public Admin getAdmin() {
+        return adminMapper.getAdmin();
+    }
+
+    /**
+     * 更新个人信息
+     *
+     * @param admin
+     * @return
+     */
+    @Override
+    public void updateInfo(Admin admin) {
+        adminMapper.updateInfo(admin);
+    }
+
+    /**
+     * 更新密码
+     *
+     * @param admin
+     * @return
+     */
+    @Override
+    public void updatePassword(Admin admin) {
+        adminMapper.updatePassword(admin);
+    }
 }

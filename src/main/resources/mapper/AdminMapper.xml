@@ -17,46 +17,53 @@
         id, name, header, signature, comment, username, password
     </sql>
 
-     <!-- 通过用户名查询用户信息 -->
-     <select id="getByUsername" resultMap="BaseResultMap">
-         select
-             name, header, signature, username, password
-         from bl_admin
-         where username = #{value}
-     </select>
+    <!-- 通过用户名查询用户信息 -->
+    <select id="getByUsername" resultMap="BaseResultMap">
+        select
+            name, header, signature, username, password
+        from bl_admin
+        where username = #{value}
+    </select>
 
-<!--    &lt;!&ndash; 修改用户信息 &ndash;&gt;-->
-<!--    <update id="update" parameterType="com.snow.blog.pojo.Admin">-->
-<!--        update bl_admin-->
-<!--        <set>-->
-<!--            <if test="name!=null and name!=''">-->
-<!--                name = #{name},-->
-<!--            </if>-->
-<!--            <if test="header!=null and header!=''">-->
-<!--                header = #{header},-->
-<!--            </if>-->
-<!--            <if test="signature!=null and signature!=''">-->
-<!--                signature = #{signature},-->
-<!--            </if>-->
-<!--            <if test="comment!=null and comment!=''">-->
-<!--                comment = #{comment},-->
-<!--            </if>-->
-<!--            <if test="username!=null and username!=''">-->
-<!--                username = #{username},-->
-<!--            </if>-->
-<!--            <if test="password!=null and password!=''">-->
-<!--                password = #{password},-->
-<!--            </if>-->
-<!--        </set>-->
-<!--        where id = #{id}-->
-<!--    </update>-->
+    <!-- 查询用户信息 -->
+    <select id="getAdmin" resultMap="BaseResultMap">
+        select
+        id, name, header, signature, comment, username
+        from bl_admin
+        limit 1
+    </select>
 
-<!--    &lt;!&ndash; 查询用户信息 &ndash;&gt;-->
-<!--    <select id="getAdmin" resultMap="BaseResultMap">-->
-<!--        select-->
-<!--        id, name, header, signature, comment, username-->
-<!--        from bl_admin-->
-<!--        limit 1-->
-<!--    </select>-->
+    <!-- 修改用户信息 -->
+    <update id="updateInfo" parameterType="com.snow.blog.pojo.Admin">
+        update bl_admin
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="header != null and header != ''">
+                header = #{header},
+            </if>
+            <if test="signature != null and signature != ''">
+                signature = #{signature},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 更新密码 -->
+    <update id="updatePassword" parameterType="com.snow.blog.pojo.Admin">
+        update bl_admin
+        set password = #{password}
+        where id = #{id}
+    </update>
 
 </mapper>
