@@ -17,6 +17,14 @@
         id, name, header, signature, comment, username, password
     </sql>
 
+     <!-- 通过用户名查询用户信息 -->
+     <select id="getByUsername" resultMap="BaseResultMap">
+         select
+             name, header, signature, username, password
+         from bl_admin
+         where username = #{value}
+     </select>
+
 <!--    &lt;!&ndash; 修改用户信息 &ndash;&gt;-->
 <!--    <update id="update" parameterType="com.snow.blog.pojo.Admin">-->
 <!--        update bl_admin-->
@@ -42,14 +50,6 @@
 <!--        </set>-->
 <!--        where id = #{id}-->
 <!--    </update>-->
-
-<!--    &lt;!&ndash; 通过用户名查询用户信息 &ndash;&gt;-->
-<!--    <select id="getByUsername" resultMap="BaseResultMap">-->
-<!--        select-->
-<!--        name, header, signature, username, password-->
-<!--        from bl_admin-->
-<!--        where username = #{value}-->
-<!--    </select>-->
 
 <!--    &lt;!&ndash; 查询用户信息 &ndash;&gt;-->
 <!--    <select id="getAdmin" resultMap="BaseResultMap">-->

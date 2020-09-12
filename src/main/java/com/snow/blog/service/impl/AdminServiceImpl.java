@@ -1,6 +1,7 @@
 package com.snow.blog.service.impl;
 
 import com.snow.blog.mapper.AdminMapper;
+import com.snow.blog.pojo.Admin;
 import com.snow.blog.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,4 +21,14 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminMapper adminMapper;
 
+    /**
+     * 根据用户名查询
+     *
+     * @param username
+     * @return
+     */
+    @Override
+    public Admin getByUsername(String username) {
+        return adminMapper.getByUsername(username);
+    }
 }
