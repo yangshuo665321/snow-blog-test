@@ -45,6 +45,11 @@ public class About implements Serializable {
     private String updateTime;
 
     /**
+     * 是否启用，0否1是
+     */
+    private Integer enable;
+
+    /**
      * 乐观锁
      */
     private Integer version;
