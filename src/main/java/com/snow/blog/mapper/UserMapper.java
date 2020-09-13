@@ -1,6 +1,7 @@
 package com.snow.blog.mapper;
 
 import com.snow.blog.pojo.User;
+import com.snow.blog.utils.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,45 +16,51 @@ import java.util.List;
 @Component
 public interface UserMapper {
 
-//    /**
-//     * 添加
-//     * @param user
-//     */
-//    void save(User user);
-//
-//    /**
-//     * 更新
-//     * @param user
-//     */
-//    void update(User user);
-//
-//    /**
-//     * 根据id查询
-//     * @param id
-//     * @return
-//     */
-//    User getById(Integer id);
-//
-//    /**
-//     * 根据id删除
-//     * @param id
-//     */
-//    void deleteById(Integer id);
-//
-//    /**
-//     * 分页查询
-//     * @param page
-//     * @return
-//     */
-//    List<User> getByPage(Page<User> page);
-//
-//    /**
-//     * 查询总数
-//     * @param page
-//     * @return
-//     */
-//    int getCountByPage(Page<User> page);
-//
+    /**
+     * 添加
+     *
+     * @param user
+     */
+    void save(User user);
+
+    /**
+     * 更新
+     *
+     * @param user
+     */
+    void update(User user);
+
+    /**
+     * 根据id查询
+     *
+     * @param id
+     * @return
+     */
+    User getById(Integer id);
+
+    /**
+     * 根据id删除
+     *
+     * @param id
+     */
+    void deleteById(Integer id);
+
+    /**
+     * 分页查询
+     *
+     * @param page
+     * @return
+     */
+    List<User> getByPage(Page<User> page);
+
+    /**
+     * 查询总数
+     *
+     * @param page
+     * @return
+     */
+    int getCountByPage(Page<User> page);
+
 //    /**
 //     * 根据id列表查询
 //     * @param userIds
