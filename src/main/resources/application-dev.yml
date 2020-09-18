@@ -23,20 +23,20 @@ spring:
       host: 47.104.159.66
       database: blog
 
-## FDFS配置
-#fdfs:
-#  so-timeout: 2500
-#  connect-timeout: 600
-#  thumb-image:
-#    width: 100
-#    height: 100
-#  tracker-list:
-#    - 47.102.115.146:22122
-#upload:
-#  base-url: http://47.102.115.146/
-#  allow-types:
-#    - image/jpeg
-#    - image/png
-#    - image/bmp
-#    - image/gif
-#    - audio/mpeg
+# FDFS配置
+fdfs:
+  so-timeout: 2500
+  connect-timeout: 600
+  thumb-image:
+    width: 100
+    height: 100
+  tracker-list:
+    - 47.104.159.66:22122
+upload:
+  base-url: http://47.104.159.66/
+  allow-types:
+    - image/jpeg
+    - image/png
+    - image/bmp
+    - image/gif
+    - audio/mpeg
