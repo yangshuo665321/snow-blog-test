@@ -43,9 +43,16 @@ public class BlogServiceImpl implements BlogService {
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void save(Blog blog) {
         blog.setBlogId(idWorker.nextId() + "");
         blogMapper.save(blog);
+
+        // 取出分类，当前分类数➕1
+        Integer blogType = blog.getBlogType();
+        Type type = typeMapper.getById(blogType);
+        type.setTypeBlogCount(type.getTypeBlogCount() + 1);
+        typeMapper.update(type);
     }
 
     /**
@@ -66,8 +73,23 @@ public class BlogServiceImpl implements BlogService {
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(Blog blog) {
+        // 修改之前先查询
+        Blog oldBlog = blogMapper.getById(blog.getBlogId());
         blogMapper.update(blog);
+        // 判断分类有没有被修改
+        Integer oldTypeId = oldBlog.getBlogType();
+        Integer newTypeId = blog.getBlogType();
+        if (!oldTypeId.equals(newTypeId)) {
+            Type oldType = typeMapper.getById(oldTypeId);
+            oldType.setTypeBlogCount(oldType.getTypeBlogCount() - 1);
+            typeMapper.update(oldType);
+
+            Type newType = typeMapper.getById(newTypeId);
+            newType.setTypeBlogCount(newType.getTypeBlogCount() + 1);
+            typeMapper.update(newType);
+        }
     }
 
     /**
